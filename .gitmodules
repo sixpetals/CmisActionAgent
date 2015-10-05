@@ -1,0 +1,3 @@
+[submodule "CmisActionAgentSolution/DotCmis"]
+	path = CmisActionAgentSolution/DotCmis
+	url = https://github.com/aegif/chemistry-dotcmis.git
