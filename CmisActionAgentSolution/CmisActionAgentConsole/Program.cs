@@ -7,6 +7,7 @@ using System.IO;
 using Aegif.Makuranage.Models;
 using Aegif.Makuranage.TriggerEngine;
 using Aegif.Makuranage.ActionEngine;
+using Aegif.Makuranage.ActionEngine.Cmis;
 
 namespace Aegif.Makuranage.ConsoleApplication {
     class Program {
@@ -14,11 +15,16 @@ namespace Aegif.Makuranage.ConsoleApplication {
             var trigger = new LocalFileSystemTrigger();
 
             trigger.Changed += Trigger_Changed;
+
+
+            Console.Read();
         }
 
         private static void Trigger_Changed(object sender, TransferObjectEventArgs e) {
-            var action = new CmisUploadAction();
-            action.Invole(e.TransferObject);
+
+            var conn = new CmisConnector();
+            var action = new CmisUploadAction(conn);
+            action.Invoke(e.TransferObject);
         }
     }
 }
