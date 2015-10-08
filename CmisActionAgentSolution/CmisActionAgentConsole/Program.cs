@@ -8,6 +8,7 @@ using Aegif.Makuranage.Models;
 using Aegif.Makuranage.TriggerEngine;
 using Aegif.Makuranage.ActionEngine;
 using Aegif.Makuranage.ActionEngine.Cmis;
+using Aegif.Makuranage.TriggerEngine.LocalFileSystem;
 
 namespace Aegif.Makuranage.ConsoleApplication {
     class Program {

@@ -7,7 +7,7 @@ using System.Web;
 using System.Threading.Tasks;
 using Aegif.Makuranage.Models;
 
-namespace Aegif.Makuranage.TriggerEngine {
+namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
     public class LocalFileSystemTrigger : ITrigger {
         private FileSystemWatcher watcher;
 
