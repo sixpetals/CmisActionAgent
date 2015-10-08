@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aegif.Makuranage.ActionEngine", "CmisActionAgentLib\Aegif.Makuranage.ActionEngine.csproj", "{8E29AF78-98B6-4682-A10D-EACBC71B47C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotCMIS", "DotCmis\DotCMIS\DotCMIS.csproj", "{529EF90F-A34C-4426-A4F9-65113AC23841}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{292A23EF-4F1D-4269-BD7F-7B7274A3CBC5}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aegif.Makuranage.ConsoleApplication", "CmisActionAgentConsole\Aegif.Makuranage.ConsoleApplication.csproj", "{AEDF31E1-9661-4DF5-8510-89813E6E71E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aegif.Makuranage.TriggerEngine", "CmisTriggerEngine\Aegif.Makuranage.TriggerEngine.csproj", "{D95AE35F-1EC1-4540-BE68-AF7EA8E76F4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aegif.Makuranage.Models", "CmisTriggerActionModel\Aegif.Makuranage.Models.csproj", "{CA9EA979-6A0E-44CC-9AEF-EDA394C93EB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E29AF78-98B6-4682-A10D-EACBC71B47C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E29AF78-98B6-4682-A10D-EACBC71B47C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E29AF78-98B6-4682-A10D-EACBC71B47C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E29AF78-98B6-4682-A10D-EACBC71B47C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{529EF90F-A34C-4426-A4F9-65113AC23841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{529EF90F-A34C-4426-A4F9-65113AC23841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{529EF90F-A34C-4426-A4F9-65113AC23841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{529EF90F-A34C-4426-A4F9-65113AC23841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEDF31E1-9661-4DF5-8510-89813E6E71E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEDF31E1-9661-4DF5-8510-89813E6E71E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEDF31E1-9661-4DF5-8510-89813E6E71E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEDF31E1-9661-4DF5-8510-89813E6E71E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95AE35F-1EC1-4540-BE68-AF7EA8E76F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95AE35F-1EC1-4540-BE68-AF7EA8E76F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95AE35F-1EC1-4540-BE68-AF7EA8E76F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95AE35F-1EC1-4540-BE68-AF7EA8E76F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9EA979-6A0E-44CC-9AEF-EDA394C93EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9EA979-6A0E-44CC-9AEF-EDA394C93EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9EA979-6A0E-44CC-9AEF-EDA394C93EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9EA979-6A0E-44CC-9AEF-EDA394C93EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

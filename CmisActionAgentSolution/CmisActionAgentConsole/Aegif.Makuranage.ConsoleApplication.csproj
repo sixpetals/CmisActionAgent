@@ -4,16 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8E29AF78-98B6-4682-A10D-EACBC71B47C9}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{AEDF31E1-9661-4DF5-8510-89813E6E71E0}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>jp.aegif.cmis.tools</RootNamespace>
-    <AssemblyName>CmisActionAgentLib</AssemblyName>
+    <RootNamespace>Aegif.Makuranage.ConsoleApplication</RootNamespace>
+    <AssemblyName>CmisActionAgentConsole</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,10 +44,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmisConnector.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CmisActionAgentLib\Aegif.Makuranage.ActionEngine.csproj">
+      <Project>{8e29af78-98b6-4682-a10d-eacbc71b47c9}</Project>
+      <Name>Aegif.Makuranage.ActionEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CmisTriggerActionModel\Aegif.Makuranage.Models.csproj">
+      <Project>{ca9ea979-6a0e-44cc-9aef-eda394c93eb4}</Project>
+      <Name>Aegif.Makuranage.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CmisTriggerEngine\Aegif.Makuranage.TriggerEngine.csproj">
+      <Project>{d95ae35f-1ec1-4540-be68-af7ea8e76f4f}</Project>
+      <Name>Aegif.Makuranage.TriggerEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotCmis\DotCMIS\DotCMIS.csproj">
       <Project>{529ef90f-a34c-4426-a4f9-65113ac23841}</Project>
       <Name>DotCMIS</Name>

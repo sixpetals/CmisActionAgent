@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace jp.aegif.cmis.tools
+namespace Aegif.Makuranage.ActionEngine.Cmis
 {
     public class CmisConnector
     {
