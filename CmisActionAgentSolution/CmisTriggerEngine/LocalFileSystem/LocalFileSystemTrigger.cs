@@ -84,11 +84,7 @@ namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
                 Changed?.Invoke(sender, eventArgs);
             }
         }
-        
 
-        public void ParseUpdate(DirectoryInfo dir) {
-
-        }
 
          private MakuraDocument GetMakuraDocument(FileInfo file) {
             using (var fileStream = file.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {

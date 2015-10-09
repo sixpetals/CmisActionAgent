@@ -10,10 +10,18 @@ using Aegif.Makuranage.ActionEngine;
 using Aegif.Makuranage.ActionEngine.Cmis;
 using Aegif.Makuranage.TriggerEngine.LocalFileSystem;
 using Aegif.Makuranage.TriggerEngine.Cmis;
+using Aegif.Makuranage.TriggerEngine.WebSiteCapture;
 
 namespace Aegif.Makuranage.ConsoleApplication {
     class Program {
         static void Main(string[] args) {
+            var timeCaptureTrigger = new TimerCapturingTrigger();
+            timeCaptureTrigger.Changed += Trigger_Changed;
+            timeCaptureTrigger.PollingStartAsync();
+            Console.WriteLine("時間ごとのWebキャプチャを開始します。何かキーを押すと終了します。");
+            Console.ReadKey();
+
+
             var localFSTrigger = new LocalFileSystemTrigger();
             localFSTrigger.Changed += Trigger_Changed;
             localFSTrigger.PollingStartAsync();
