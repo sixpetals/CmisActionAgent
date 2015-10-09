@@ -16,18 +16,18 @@ namespace Aegif.Makuranage.ConsoleApplication {
         static void Main(string[] args) {
             var localFSTrigger = new LocalFileSystemTrigger();
             localFSTrigger.Changed += Trigger_Changed;
-            localFSTrigger.EnableRaisingEvents = true;
+            localFSTrigger.PollingStartAsync();
             Console.WriteLine("ローカルファイルシステムの監視を開始します。何かキーを押すと終了します。");
-            Console.Read();
-            localFSTrigger.EnableRaisingEvents = false;
+            Console.ReadKey();
+
 
             var provider = new SettingsChangeLogTokenProvider();
             var cmisChangeLogTrigger = new CmisUpdateTrigger(provider);
             cmisChangeLogTrigger.Changed += Trigger_Changed;
-            cmisChangeLogTrigger.EnableRaisingEvents = true;
+            cmisChangeLogTrigger.PollingStartAsync();
             Console.WriteLine("CMISリポジトリの監視を開始します。何かキーを押すと終了します。");
-            Console.Read();
-            cmisChangeLogTrigger.EnableRaisingEvents = false;
+            Console.ReadKey();
+
 
         }
 

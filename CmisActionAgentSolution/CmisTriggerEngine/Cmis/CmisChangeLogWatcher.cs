@@ -16,7 +16,6 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis {
             this.LatestChangeLogTokenProvider = latestChangeLogTokenProvider;
         }
 
-        public bool EnableRaisingEvents { get; set; }
 
         public event CmisChangeLogEventHandler Changed;
 
@@ -24,37 +23,45 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis {
 
         public CmisConnector connector;
 
-        public void Poling() {
-            while (true) {
-                if (!EnableRaisingEvents) return;
+        private bool pollingOn;
 
-                var session = connector.CreateSession();
-                var latestChangeLogToken = LatestChangeLogTokenProvider.GetChangeLogToken();
-                var changeLogs = session.GetContentChanges(latestChangeLogToken, false, 10);
-                if ( changeLogs.TotalNumItems > 0){
-                    foreach (var cle in changeLogs.ChangeEventList) {
-                        if (!EnableRaisingEvents) return;
+        public async void PollingStartAsync() {
+            pollingOn = true;
 
-                        var doc = session.GetObject(cle.ObjectId) as Document;
-                        if (doc == null) continue; //とりあえずドキュメントのみ
+            await Task.Run(() => {
+                while (pollingOn) {
 
-                        var evChangeType = WatcherChangeTypes.Changed;
-                        if (cle.ChangeType == ChangeType.Created) {
-                            evChangeType = WatcherChangeTypes.Created;
-                        } else if (cle.ChangeType == ChangeType.Deleted) {
-                            evChangeType = WatcherChangeTypes.Deleted;
-                        }else if (cle.ChangeType == ChangeType.Updated) {
-                            evChangeType = WatcherChangeTypes.Changed;
+                    var session = connector.CreateSession();
+                    var latestChangeLogToken = LatestChangeLogTokenProvider.GetChangeLogToken();
+                    var changeLogs = session.GetContentChanges(latestChangeLogToken, false, 10);
+                    if (changeLogs.TotalNumItems > 0) {
+                        foreach (var cle in changeLogs.ChangeEventList) {
+
+                            var doc = session.GetObject(cle.ObjectId) as Document;
+                            if (doc == null) continue; //とりあえずドキュメントのみ
+
+                            var evChangeType = WatcherChangeTypes.Changed;
+                            if (cle.ChangeType == ChangeType.Created) {
+                                evChangeType = WatcherChangeTypes.Created;
+                            } else if (cle.ChangeType == ChangeType.Deleted) {
+                                evChangeType = WatcherChangeTypes.Deleted;
+                            } else if (cle.ChangeType == ChangeType.Updated) {
+                                evChangeType = WatcherChangeTypes.Changed;
+                            }
+
+                            var evArg = new CmisChangeLogEventArgs(evChangeType, doc);
+                            this.Changed(this, evArg);
                         }
 
-                        var evArg = new CmisChangeLogEventArgs(evChangeType, doc);
-                        this.Changed(this, evArg);
+                        LatestChangeLogTokenProvider.SetChangeLogToken(session.RepositoryInfo.LatestChangeLogToken);
                     }
 
-                    LatestChangeLogTokenProvider.SetChangeLogToken(changeLogs.LatestChangeLogToken);
                 }
+            });
+        }
 
-            }
+        internal void PollingStop() {
+            pollingOn = false;
         }
     }
 

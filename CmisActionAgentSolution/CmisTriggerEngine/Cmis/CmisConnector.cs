@@ -19,7 +19,11 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis
         public String RepositoryId { get; set; } = "bedroom";
 
         public String AtomPubUrl { get; set; } = "http://trial.nemakiware.com:8080/core/atom/bedroom/";
+
+
         
+
+
         public CmisConnector() {
 
         }

@@ -19,24 +19,17 @@ namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
 
         private FileSystemWatcher watcher;
 
-
-        public bool EnableRaisingEvents {
-            get {
-                return watcher.EnableRaisingEvents;
-            }
-
-            set {
-                watcher.EnableRaisingEvents = value;
-            }
-        }
-
  
         public LocalFileSystemTrigger() {
+
+        }
+
+        public void PollingStartAsync() {
             watcher = new FileSystemWatcher();
             watcher.Path = BaseDirectoryPath;
-            
+
             watcher.NotifyFilter =
-                ( System.IO.NotifyFilters.LastWrite
+                (System.IO.NotifyFilters.LastWrite
                 | System.IO.NotifyFilters.FileName);
             watcher.Filter = "";
 
@@ -46,6 +39,10 @@ namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
             watcher.Created += Watcher_Changed;
 
             watcher.EnableRaisingEvents = true;
+        }
+
+        public void PollingStop() {
+            watcher.EnableRaisingEvents = false;
         }
 
         public event MakuraObjectEventHandler Changed;

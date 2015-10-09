@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace Aegif.Makuranage.ConsoleApplication {
     public class SettingsChangeLogTokenProvider : IChangeLogTokenProvider {
         public string GetChangeLogToken() {
-            return Properties.Settings.Default.LatestChangeToken;
+            var token = Properties.Settings.Default.LatestChangeToken;
+            return token == String.Empty ? null : token;
         }
 
         public void SetChangeLogToken(string changeLog) {
