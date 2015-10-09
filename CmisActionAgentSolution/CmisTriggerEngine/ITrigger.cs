@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Aegif.Makuranage.TriggerEngine {
     interface ITrigger {
         event TransferObjectEventHandler Changed;
+        bool EnableRaisingEvents {get;set;}
     }
 
     public delegate void TransferObjectEventHandler(object sender, TransferObjectEventArgs e);

@@ -16,8 +16,8 @@ namespace Aegif.Makuranage.ActionEngine.Cmis {
         public String path { get; set; }
         public CmisConnector conn { get; set; }
 
-        public CmisUploadAction(CmisConnector conn) {
-            this.conn = conn;
+        public CmisUploadAction() {
+            this.conn = conn = new CmisConnector();
         }
 
         public void Invoke(MakuraObject obj) {

@@ -48,6 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmis\CmisChangeLogWatcher.cs" />
+    <Compile Include="Cmis\CmisConnector.cs" />
+    <Compile Include="Cmis\CmisUpdateTrigger.cs" />
+    <Compile Include="Cmis\IChangeLogTokenProvider.cs" />
     <Compile Include="ITrigger.cs" />
     <Compile Include="LocalFileSystem\LocalFileSystemTrigger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,7 +64,12 @@
       <Project>{ca9ea979-6a0e-44cc-9aef-eda394c93eb4}</Project>
       <Name>Aegif.Makuranage.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DotCmis\DotCMIS\DotCMIS.csproj">
+      <Project>{529ef90f-a34c-4426-a4f9-65113ac23841}</Project>
+      <Name>DotCMIS</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

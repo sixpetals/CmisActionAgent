@@ -14,17 +14,15 @@ namespace Aegif.Makuranage.ConsoleApplication {
     class Program {
         static void Main(string[] args) {
             var trigger = new LocalFileSystemTrigger();
-
             trigger.Changed += Trigger_Changed;
-
-
+            trigger.EnableRaisingEvents = true;
+            Console.WriteLine("ローカルファイルシステムの監視を開始します。何かキーを押すと終了します。");
             Console.Read();
+            trigger.EnableRaisingEvents = false;
         }
 
         private static void Trigger_Changed(object sender, TransferObjectEventArgs e) {
-
-            var conn = new CmisConnector();
-            var action = new CmisUploadAction(conn);
+            var action = new CmisUploadAction();
             action.Invoke(e.TransferObject);
         }
     }

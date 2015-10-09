@@ -9,7 +9,7 @@ using Aegif.Makuranage.Models;
 
 namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
     public class LocalFileSystemTrigger : ITrigger {
-        private FileSystemWatcher watcher;
+
 
         public String BaseDirectoryPath { get; set; } = @"D:\Users\takuma.sugimoto\Desktop\Sample";
 
@@ -17,6 +17,20 @@ namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
             get { return new DirectoryInfo(BaseDirectoryPath); }
         }
 
+        private FileSystemWatcher watcher;
+
+
+        public bool EnableRaisingEvents {
+            get {
+                return watcher.EnableRaisingEvents;
+            }
+
+            set {
+                watcher.EnableRaisingEvents = value;
+            }
+        }
+
+ 
         public LocalFileSystemTrigger() {
             watcher = new FileSystemWatcher();
             watcher.Path = BaseDirectoryPath;
@@ -39,7 +53,7 @@ namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
         private void Watcher_Changed(object sender, FileSystemEventArgs e) {
             var filePath = e.FullPath;
             
-            //ここで、ベースパスからの相対パス作成、MakuraFolderの階層を作成し末端にぶら下げる
+            //TODO: ベースパスからの相対パス作成、MakuraFolderの階層を作成し末端にぶら下げる
             var file = new FileInfo(filePath);
             
             var doc = GetMakuraDocument(file);
