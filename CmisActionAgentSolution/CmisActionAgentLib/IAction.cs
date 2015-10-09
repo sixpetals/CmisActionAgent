@@ -7,6 +7,6 @@ using Aegif.Makuranage.Models;
 
 namespace Aegif.Makuranage.ActionEngine {
     public interface IAction{
-        void Invoke(MakuraObject obj);
+        void Invoke(String path, MakuraDocument doc);
     }
 }

@@ -33,6 +33,8 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis {
                 var changeLogs = session.GetContentChanges(latestChangeLogToken, false, 10);
                 if ( changeLogs.TotalNumItems > 0){
                     foreach (var cle in changeLogs.ChangeEventList) {
+                        if (!EnableRaisingEvents) return;
+
                         var doc = session.GetObject(cle.ObjectId) as Document;
                         if (doc == null) continue; //とりあえずドキュメントのみ
 
@@ -50,7 +52,6 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis {
                     }
 
                     LatestChangeLogTokenProvider.SetChangeLogToken(changeLogs.LatestChangeLogToken);
-
                 }
 
             }

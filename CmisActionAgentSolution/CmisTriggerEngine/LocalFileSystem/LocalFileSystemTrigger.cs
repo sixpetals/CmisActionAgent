@@ -36,31 +36,56 @@ namespace Aegif.Makuranage.TriggerEngine.LocalFileSystem {
             watcher.Path = BaseDirectoryPath;
             
             watcher.NotifyFilter =
-                (System.IO.NotifyFilters.LastAccess
-                | System.IO.NotifyFilters.LastWrite
-                | System.IO.NotifyFilters.FileName
-                | System.IO.NotifyFilters.DirectoryName);
+                ( System.IO.NotifyFilters.LastWrite
+                | System.IO.NotifyFilters.FileName);
             watcher.Filter = "";
 
+
+            watcher.IncludeSubdirectories = true;
             watcher.Changed += Watcher_Changed;
             watcher.Created += Watcher_Changed;
 
             watcher.EnableRaisingEvents = true;
         }
 
-        public event TransferObjectEventHandler Changed;
+        public event MakuraObjectEventHandler Changed;
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e) {
             var filePath = e.FullPath;
             
-            //TODO: ベースパスからの相対パス作成、MakuraFolderの階層を作成し末端にぶら下げる
             var file = new FileInfo(filePath);
-            
-            var doc = GetMakuraDocument(file);
-            var eventArgs = new TransferObjectEventArgs();
-            eventArgs.TransferObject = doc;
+            if(!file.Exists)return;
 
-            Changed?.Invoke(sender, eventArgs);
+            var fileDir = new Uri(file.Directory.FullName);
+            var baseDir = new Uri(BaseDirectory.FullName);
+
+            var relativePath = baseDir.MakeRelativeUri(fileDir).ToString();
+
+            var prefix = @"../";
+            if ( relativePath.StartsWith(prefix)) {
+                relativePath = relativePath.Substring(prefix.Length);
+            }
+
+
+
+            //var doc = GetMakuraDocument(file);
+            using (var fileStream = file.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+                var content = new MakuraContentStream();
+                content.FileName = file.Name;
+                content.Length = fileStream.Length;
+                content.MimeType = MimeMapping.GetMimeMapping(file.Name);
+                content.Stream = fileStream;
+
+                var doc = new MakuraDocument();
+                doc.ContentStream = content;
+                doc.Name = file.Name;
+
+                var eventArgs = new MakuraDocumentEventArgs();
+                eventArgs.UpdatedDocument = doc;
+                eventArgs.Path = relativePath;
+
+                Changed?.Invoke(sender, eventArgs);
+            }
         }
         
 

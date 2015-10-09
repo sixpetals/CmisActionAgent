@@ -20,38 +20,34 @@ namespace Aegif.Makuranage.ActionEngine.Cmis {
             this.conn = conn = new CmisConnector();
         }
 
-        public void Invoke(MakuraObject obj) {
+        public void Invoke(String path, MakuraDocument doc) {
             var session = conn.CreateSession();
-            var folder = session.GetRootFolder();
 
-
-            Upload(folder, obj);
+            var targetFolder = SetTargetFolder(path, session);
+            Upload(targetFolder, doc);
         }
 
-        private void Upload(IFolder uploadFolder, MakuraObject obj) {
-            if(obj is MakuraDocument) {
-                Upload(uploadFolder, obj as MakuraDocument);
-            }else if (obj is MakuraFolder) {
-                var makuraFolder = obj as MakuraFolder;
-                var newTargetFolder = Upload(uploadFolder, makuraFolder);
-                makuraFolder.MakuraObjects.ForEach(p => Upload(newTargetFolder, p));
-            }
-        }
+        private static IFolder SetTargetFolder(string path, ISession session) {
+            //目的の場所までフォルダを掘りながら下る
+            var currentFolder = session.GetRootFolder();
+            var folderNames = path.Split('/');
 
+            foreach (var targetFolderName in folderNames) {
+                if (String.IsNullOrEmpty(targetFolderName)) continue;
+                var existFolder = currentFolder.GetChildren().OfType<IFolder>().FirstOrDefault(p => p.Name == targetFolderName);
+                if (existFolder == null) {
+                    var properties = new Dictionary<string, object>();
+                    properties[PropertyIds.Name] = targetFolderName;
+                    properties[PropertyIds.ObjectTypeId] = "cmis:folder";
+                    currentFolder = currentFolder.CreateFolder(properties);
+                } else {
+                    currentFolder = existFolder;
+                }
 
-        private IFolder Upload(IFolder uploadFolder, MakuraFolder folder) {
-            var existFolder = uploadFolder.GetChildren().OfType<IFolder>().FirstOrDefault(p => p.Name == folder.Name);
-            if (existFolder == null) {
-                var properties = new Dictionary<string, object>();
-                properties[PropertyIds.Name] = folder.Name;
-                properties[PropertyIds.ObjectTypeId] = "cmis:folder";
-                return uploadFolder.CreateFolder(properties);
-            } else {
-                return existFolder;
             }
 
+            return currentFolder;
         }
-
 
         private IDocument Upload(IFolder uploadFolder, MakuraDocument document) {
             var cmisDocumentStream = document.ContentStream.ConvertCmis();
@@ -61,7 +57,7 @@ namespace Aegif.Makuranage.ActionEngine.Cmis {
                 var properties = new Dictionary<string, object>();
                 properties[PropertyIds.Name] = document.Name;
                 properties[PropertyIds.ObjectTypeId] = "cmis:document";
-
+               
                 return uploadFolder.CreateDocument(properties, cmisDocumentStream, DotCMIS.Enums.VersioningState.Minor);
             } else {
                 existDoc.SetContentStream(cmisDocumentStream,true);

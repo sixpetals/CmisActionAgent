@@ -10,7 +10,7 @@ using Aegif.Makuranage.Models;
 
 namespace Aegif.Makuranage.TriggerEngine.Cmis {
     public class CmisUpdateTrigger : ITrigger {
-        public event TransferObjectEventHandler Changed;
+        public event MakuraObjectEventHandler Changed;
 
         public CmisConnector Connector { get;private set; }
 
@@ -38,8 +38,8 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis {
         private void Watcher_Changed(object sender, CmisChangeLogEventArgs e) {
 
             var doc = GetMakuraDocument(e.UpdatedDocument);
-            var eventArgs = new TransferObjectEventArgs();
-            eventArgs.TransferObject = doc;
+            var eventArgs = new MakuraDocumentEventArgs();
+            eventArgs.UpdatedDocument = doc;
 
             Changed?.Invoke(sender, eventArgs);
         }

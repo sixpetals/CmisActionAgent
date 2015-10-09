@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace Aegif.Makuranage.TriggerEngine {
     interface ITrigger {
-        event TransferObjectEventHandler Changed;
+        event MakuraObjectEventHandler Changed;
         bool EnableRaisingEvents {get;set;}
     }
 
-    public delegate void TransferObjectEventHandler(object sender, TransferObjectEventArgs e);
+    public delegate void MakuraObjectEventHandler(object sender, MakuraDocumentEventArgs e);
 
-    public class TransferObjectEventArgs : EventArgs {
-        public MakuraObject TransferObject { get; set; }
+    public class MakuraDocumentEventArgs : EventArgs {
+        public MakuraDocument UpdatedDocument { get; set; }
+
+        public String Path { get; set; }
+
     }
 }
