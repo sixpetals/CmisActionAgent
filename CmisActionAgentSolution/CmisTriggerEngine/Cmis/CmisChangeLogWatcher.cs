@@ -36,21 +36,24 @@ namespace Aegif.Makuranage.TriggerEngine.Cmis {
                     var changeLogs = session.GetContentChanges(latestChangeLogToken, false, 10);
                     if (changeLogs.TotalNumItems > 0) {
                         foreach (var cle in changeLogs.ChangeEventList) {
+                            try {
+                                var doc = session.GetObject(cle.ObjectId) as Document;
+                                if (doc == null) continue; //とりあえずドキュメントのみ
 
-                            var doc = session.GetObject(cle.ObjectId) as Document;
-                            if (doc == null) continue; //とりあえずドキュメントのみ
+                                var evChangeType = WatcherChangeTypes.Changed;
+                                if (cle.ChangeType == ChangeType.Created) {
+                                    evChangeType = WatcherChangeTypes.Created;
+                                } else if (cle.ChangeType == ChangeType.Deleted) {
+                                    evChangeType = WatcherChangeTypes.Deleted;
+                                } else if (cle.ChangeType == ChangeType.Updated) {
+                                    evChangeType = WatcherChangeTypes.Changed;
+                                }
 
-                            var evChangeType = WatcherChangeTypes.Changed;
-                            if (cle.ChangeType == ChangeType.Created) {
-                                evChangeType = WatcherChangeTypes.Created;
-                            } else if (cle.ChangeType == ChangeType.Deleted) {
-                                evChangeType = WatcherChangeTypes.Deleted;
-                            } else if (cle.ChangeType == ChangeType.Updated) {
-                                evChangeType = WatcherChangeTypes.Changed;
+                                var evArg = new CmisChangeLogEventArgs(evChangeType, doc);
+                                this.Changed(this, evArg);
+                            } catch {
+
                             }
-
-                            var evArg = new CmisChangeLogEventArgs(evChangeType, doc);
-                            this.Changed(this, evArg);
                         }
 
                         LatestChangeLogTokenProvider.SetChangeLogToken(session.RepositoryInfo.LatestChangeLogToken);
